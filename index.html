@@ -23,15 +23,14 @@
     padding:calc(env(safe-area-inset-top) + 6px) 0 calc(env(safe-area-inset-bottom) + 90px);
   }
   .num{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
-
   main{padding:16px;max-width:540px;margin:0 auto}
   h1{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;margin:6px 0 2px;letter-spacing:-.01em}
   h1 .py{color:var(--pyg)}
   .sub{color:var(--ink-dim);font-size:.86rem;margin:0 0 18px}
+  .sec{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:22px 4px 10px;display:flex;justify-content:space-between;align-items:center}
+  .savehint{font-size:.6rem;color:var(--accent);letter-spacing:.08em;opacity:.0;transition:opacity .4s}
+  .savehint.show{opacity:.8}
 
-  .sec{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:22px 4px 10px}
-
-  /* PARÂMETROS */
   .params{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .params .full{grid-column:1/-1}
   .pcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
@@ -41,7 +40,17 @@
   .pcard input{width:100%;border:0;background:transparent;color:var(--ink);font-family:'IBM Plex Mono',monospace;
     font-size:1.15rem;font-weight:500;outline:none;font-variant-numeric:tabular-nums;padding:2px 0}
 
-  /* RESUMO */
+  /* BANNER COTAÇÃO OFICIAL */
+  .fx{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:12px;padding:10px 12px;font-size:.78rem}
+  .fx .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:none}
+  .fx.live .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+  .fx .txt{flex:1;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;line-height:1.35}
+  .fx .txt b{color:var(--ink)}
+  .fx .use{flex:none;border:0;background:var(--accent);color:#06251b;font-weight:700;font-family:inherit;
+    font-size:.76rem;padding:8px 13px;border-radius:9px;cursor:pointer}
+  .fx .use:disabled{background:var(--panel);color:var(--ink-faint);cursor:default}
+
   .resumo{background:linear-gradient(180deg,var(--panel),#10161f);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
   .rhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
   .rhead .ttl{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem}
@@ -60,52 +69,40 @@
   .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent-deep),var(--accent));transition:width .35s ease}
   .barlbl{display:flex;justify-content:space-between;font-size:.68rem;color:var(--ink-faint);margin-top:7px;letter-spacing:.04em}
 
-  /* CARTÃO DE DESPESA */
   .xp{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:13px 14px;margin-bottom:11px}
   .xp .head{display:flex;align-items:center;gap:8px;margin-bottom:11px}
   .xp .name{flex:1;border:0;background:transparent;color:var(--ink);font-size:1.05rem;font-weight:600;outline:none;padding:4px 0;min-width:0}
-  .xp .del{flex:none;width:34px;height:34px;border:0;border-radius:10px;background:var(--panel-2);color:var(--ink-faint);
-    font-size:1.3rem;line-height:1;cursor:pointer}
+  .xp .del{flex:none;width:34px;height:34px;border:0;border-radius:10px;background:var(--panel-2);color:var(--ink-faint);font-size:1.3rem;line-height:1;cursor:pointer}
   .xp .del:active{background:rgba(255,107,107,.18);color:var(--danger)}
   .entry{display:flex;gap:10px;align-items:stretch}
   .amtbox{flex:1;display:flex;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:0 13px}
-  .amtbox input{width:100%;border:0;background:transparent;color:#fff;font-family:'IBM Plex Mono',monospace;
-    font-size:1.35rem;font-weight:500;outline:none;text-align:right;font-variant-numeric:tabular-nums;padding:13px 0}
+  .amtbox input{width:100%;border:0;background:transparent;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:1.35rem;font-weight:500;outline:none;text-align:right;font-variant-numeric:tabular-nums;padding:13px 0}
   .amtbox:focus-within{border-color:var(--accent)}
   .seg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;overflow:hidden;flex:none}
-  .seg button{border:0;background:transparent;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;
-    font-weight:600;font-size:.78rem;padding:0 13px;cursor:pointer;transition:.12s}
+  .seg button{border:0;background:transparent;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:.78rem;padding:0 13px;cursor:pointer;transition:.12s}
   .seg button.on{color:#06251b;background:var(--accent)}
   .chips{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap}
-  .chip{font-family:'IBM Plex Mono',monospace;font-size:.78rem;background:var(--panel-2);border:1px solid var(--line-soft);
-    border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
+  .chip{font-family:'IBM Plex Mono',monospace;font-size:.78rem;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
   .chip.usd{color:var(--usd)} .chip.pyg{color:var(--pyg)} .chip.brl{color:var(--brl)}
   .chip .k{color:var(--ink-faint);font-size:.66em;margin-right:4px}
 
-  .add{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;
-    border:1.5px dashed var(--line);color:var(--ink-dim);border-radius:14px;padding:15px;cursor:pointer;
-    font-family:inherit;font-size:.92rem;font-weight:600;margin-top:4px}
+  .add{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:transparent;border:1.5px dashed var(--line);color:var(--ink-dim);border-radius:14px;padding:15px;cursor:pointer;font-family:inherit;font-size:.92rem;font-weight:600;margin-top:4px}
   .add:active{border-color:var(--accent);color:var(--accent)}
 
-  /* AÇÕES FIXAS EMBAIXO */
-  .actbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:10px;
-    padding:12px 16px calc(env(safe-area-inset-bottom) + 12px);
-    background:linear-gradient(180deg,transparent,rgba(13,17,23,.92)28%);}
+  .actbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:10px;padding:12px 16px calc(env(safe-area-inset-bottom) + 12px);background:linear-gradient(180deg,transparent,rgba(13,17,23,.92)28%)}
   .actbar .btn{flex:1;font-family:inherit;font-size:.95rem;font-weight:700;border-radius:13px;padding:15px;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--ink)}
   .actbar .btn.primary{background:var(--accent);color:#06251b;border-color:var(--accent)}
   .actbar .btn:active{filter:brightness(1.1)}
-  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--accent);
-    color:#06251b;font-weight:700;font-size:.85rem;padding:11px 20px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:40}
+  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--accent);color:#06251b;font-weight:700;font-size:.85rem;padding:11px 20px;border-radius:12px;opacity:0;pointer-events:none;transition:.25s;z-index:40}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-
 <main>
   <h1>Contas Fixas <span class="py">Paraguai</span></h1>
-  <p class="sub">Toque para editar. Recalcula em USD, Guarani e Real na hora.</p>
+  <p class="sub">Toque para editar. Salva sozinho e recalcula em USD, Guarani e Real na hora.</p>
 
-  <div class="sec">Cotação &amp; Salário</div>
+  <div class="sec"><span>Cotação &amp; Salário</span><span class="savehint" id="saveHint">salvo ✓</span></div>
   <div class="params">
     <div class="pcard"><label>USD → Real</label><div class="row"><span class="tag" style="color:var(--brl)">R$</span>
       <input class="num" id="usdBrl" inputmode="decimal" value="5.05"></div></div>
@@ -113,6 +110,11 @@
       <input class="num" id="usdPyg" inputmode="numeric" value="6060"></div></div>
     <div class="pcard full"><label>Salário (em dólar)</label><div class="row"><span class="tag" style="color:var(--usd)">US$</span>
       <input class="num" id="salary" inputmode="numeric" value="3605"></div></div>
+    <div class="fx" id="fxBanner">
+      <span class="dot"></span>
+      <span class="txt" id="fxTxt">Buscando cotação oficial do dia…</span>
+      <button class="use" id="fxUse" disabled>Usar</button>
+    </div>
   </div>
 
   <div class="sec">Resumo</div>
@@ -151,8 +153,10 @@ const DEFAULTS=[
   {name:"Compra de facturas",amt:0,cur:"PYG"},
   {name:"Cartão de crédito",amt:4530000,cur:"PYG"},
 ];
+const KEY="contas-py-v1";
 let rows=structuredClone(DEFAULTS);
 let view="BRL";
+let liveRates=null; // {brl,pyg,date}
 const $=s=>document.querySelector(s);
 const rate=()=>({brl:parseFloat($("#usdBrl").value)||0,pyg:parseFloat($("#usdPyg").value)||0});
 const toUSD=(a,c,r)=>c==="USD"?a:c==="PYG"?(r.pyg?a/r.pyg:0):(r.brl?a/r.brl:0);
@@ -163,6 +167,41 @@ const fmt={
 };
 const CURS=["USD","PYG","BRL"];
 
+/* ---- salvar / carregar ---- */
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify({rows,view,salary:$("#salary").value,usdBrl:$("#usdBrl").value,usdPyg:$("#usdPyg").value}));
+    const h=$("#saveHint");h.classList.add("show");clearTimeout(window._st);window._st=setTimeout(()=>h.classList.remove("show"),1200);
+  }catch(e){}
+}
+function load(){
+  try{const s=JSON.parse(localStorage.getItem(KEY));if(s){
+    if(Array.isArray(s.rows))rows=s.rows;
+    if(s.view)view=s.view;
+    if(s.salary!=null)$("#salary").value=s.salary;
+    if(s.usdBrl!=null)$("#usdBrl").value=s.usdBrl;
+    if(s.usdPyg!=null)$("#usdPyg").value=s.usdPyg;
+  }}catch(e){}
+}
+
+/* ---- cotação do dia (roda no navegador) ---- */
+async function fetchRates(){
+  try{
+    const res=await fetch("https://open.er-api.com/v6/latest/USD");
+    const d=await res.json();
+    if(d&&d.rates&&d.rates.BRL&&d.rates.PYG){
+      const dt=d.time_last_update_utc?new Date(d.time_last_update_utc):new Date();
+      liveRates={brl:+d.rates.BRL.toFixed(2),pyg:Math.round(d.rates.PYG),date:dt.toLocaleDateString("pt-BR")};
+      const b=$("#fxBanner");b.classList.add("live");
+      $("#fxTxt").innerHTML=`Oficial ${liveRates.date}: <b>R$ ${liveRates.brl.toLocaleString("pt-BR",{minimumFractionDigits:2})}</b> · <b>₲ ${liveRates.pyg.toLocaleString("es-PY")}</b>`;
+      $("#fxUse").disabled=false;
+    }else throw 0;
+  }catch(e){
+    $("#fxTxt").textContent="Cotação automática indisponível — use os valores manuais.";
+    $("#fxUse").style.display="none";
+  }
+}
+
+/* ---- render ---- */
 function renderRows(){
   const c=$("#rows");c.innerHTML="";
   rows.forEach((row,i)=>{
@@ -170,7 +209,7 @@ function renderRows(){
     const el=document.createElement("div");el.className="xp";
     el.innerHTML=`
       <div class="head">
-        <input class="name" value="${row.name.replace(/"/g,'&quot;')}" data-i="${i}" data-k="name" placeholder="Nome da despesa">
+        <input class="name" value="${(row.name||"").replace(/"/g,'&quot;')}" data-i="${i}" data-k="name" placeholder="Nome da despesa">
         <button class="del" data-del="${i}">×</button>
       </div>
       <div class="entry">
@@ -207,30 +246,34 @@ function calc(){
     set("USD",u);set("PYG",p);set("BRL",b);
   });
   const sU=parseFloat($("#salary").value)||0,sB=sU*r.brl;
-  // valores conforme a moeda escolhida no resumo
-  const totView = view==="USD" ? tU : tB;
-  const salView = view==="USD" ? sU : sB;
-  const diffView = salView - totView;
-  const sup = diffView>=0;
-  $("#rTot").textContent = fmt[view](totView);
-  $("#rSal").textContent = fmt[view](salView);
-  $("#rDiff").textContent = (sup?"+ ":"− ")+fmt[view](Math.abs(diffView));
+  const totView=view==="USD"?tU:tB, salView=view==="USD"?sU:sB, diffView=salView-totView, sup=diffView>=0;
+  $("#rTot").textContent=fmt[view](totView);
+  $("#rSal").textContent=fmt[view](salView);
+  $("#rDiff").textContent=(sup?"+ ":"− ")+fmt[view](Math.abs(diffView));
   const dr=$("#rDiffRow");dr.classList.toggle("sup",sup);dr.classList.toggle("def",!sup);
   const com=sB>0?tB/sB*100:0;
   $("#bar").style.width=Math.min(com,100)+"%";
   $("#bar").style.background=com>100?"linear-gradient(90deg,#b32d2d,var(--danger))":"linear-gradient(90deg,var(--accent-deep),var(--accent))";
   $("#commit").textContent=com.toFixed(1)+"%";
+  save();
 }
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1700);}
 
+/* ---- eventos ---- */
 $("#moedaToggle").querySelectorAll("button").forEach(b=>b.onclick=e=>{
   view=e.target.dataset.view;
   e.target.parentElement.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===e.target));
   calc();
 });
-$("#addRow").onclick=()=>{rows.push({name:"Nova despesa",amt:0,cur:"PYG"});renderRows();
-  window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});};
-$("#resetBtn").onclick=()=>{rows=structuredClone(DEFAULTS);$("#usdBrl").value=5.05;$("#usdPyg").value=6060;$("#salary").value=3605;renderRows();toast("Restaurado");};
+$("#fxUse").onclick=()=>{
+  if(!liveRates)return;
+  $("#usdBrl").value=liveRates.brl;$("#usdPyg").value=liveRates.pyg;
+  calc();toast("Cotação oficial aplicada");
+};
+$("#addRow").onclick=()=>{rows.push({name:"Nova despesa",amt:0,cur:"PYG"});renderRows();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});};
+$("#resetBtn").onclick=()=>{rows=structuredClone(DEFAULTS);$("#usdBrl").value=5.05;$("#usdPyg").value=6060;$("#salary").value=3605;view="BRL";
+  $("#moedaToggle").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.view==="BRL"));
+  renderRows();toast("Restaurado");};
 ["#usdBrl","#usdPyg","#salary"].forEach(s=>$(s).oninput=calc);
 $("#copyBtn").onclick=()=>{
   const r=rate();let L=["CONTAS FIXAS PARAGUAI",""],tB=0,tU=0,tP=0;
@@ -240,7 +283,12 @@ $("#copyBtn").onclick=()=>{
   L.push("",`TOTAL: ${fmt.BRL(tB)} | ${fmt.USD(tU)}`,`SALÁRIO: ${fmt.BRL(sU*r.brl)} | ${fmt.USD(sU)}`,`DIFERENÇA: ${dB>=0?"+":"−"}${fmt.BRL(Math.abs(dB))}`);
   navigator.clipboard.writeText(L.join("\n")).then(()=>toast("Copiado ✓"),()=>toast("Falha ao copiar"));
 };
+
+/* ---- init ---- */
+load();
+$("#moedaToggle").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
 renderRows();
+fetchRates();
 </script>
 </body>
 </html>
