@@ -169,6 +169,18 @@ const fmt={
   PYG:v=>"₲ "+Math.round(v).toLocaleString("es-PY"),
 };
 const CURS=["USD","PYG","BRL"];
+// máscara de digitação por moeda: USD/PYG inteiro com ponto de milhar; BRL com vírgula e 2 decimais
+function fmtAmt(amt,cur){
+  if(cur==="BRL") return (amt||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  return Math.round(amt||0).toLocaleString("pt-BR");
+}
+function parseAmt(str,cur){
+  const d=(str||"").replace(/\D/g,"");
+  if(!d) return 0;
+  return cur==="BRL" ? parseInt(d,10)/100 : parseInt(d,10);
+}
+const salNum=()=>{const d=($("#salary").value||"").replace(/\D/g,"");return d?parseInt(d,10):0;};
+const fmtSal=()=>{$("#salary").value=salNum()?salNum().toLocaleString("pt-BR"):"";};
 
 /* ---- salvar / carregar ---- */
 function save(){
@@ -216,7 +228,7 @@ function renderRows(){
         <button class="del" data-del="${i}">×</button>
       </div>
       <div class="entry">
-        <div class="amtbox"><input class="num" inputmode="decimal" value="${row.amt}" data-i="${i}" data-k="amt"></div>
+        <div class="amtbox"><input class="num" inputmode="numeric" value="${fmtAmt(row.amt,row.cur)}" data-i="${i}" data-k="amt"></div>
         <div class="seg">${seg}</div>
       </div>
       <div class="chips">
@@ -232,11 +244,19 @@ function renderRows(){
 function bind(){
   document.querySelectorAll("[data-k]").forEach(el=>el.oninput=e=>{
     const i=+e.target.dataset.i,k=e.target.dataset.k;
-    rows[i][k]=k==="amt"?(parseFloat(e.target.value)||0):e.target.value;calc();
+    if(k==="amt"){
+      const cur=rows[i].cur, n=parseAmt(e.target.value,cur);
+      rows[i].amt=n;
+      e.target.value=fmtAmt(n,cur);
+      const l=e.target.value.length; try{e.target.setSelectionRange(l,l);}catch(_){}
+    }else{rows[i][k]=e.target.value;}
+    calc();
   });
   document.querySelectorAll("[data-cur]").forEach(b=>b.onclick=e=>{
     const i=+e.target.dataset.i;rows[i].cur=e.target.dataset.cur;
     e.target.parentElement.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===e.target));
+    const ai=document.querySelector(`.amtbox input[data-i="${i}"][data-k="amt"]`);
+    if(ai)ai.value=fmtAmt(rows[i].amt,rows[i].cur);
     calc();
   });
   document.querySelectorAll("[data-del]").forEach(b=>b.onclick=e=>{rows.splice(+e.currentTarget.dataset.del,1);renderRows();});
@@ -248,7 +268,7 @@ function calc(){
     const set=(k,v)=>{const e=document.querySelector(`[data-c="${k}-${i}"]`);if(e)e.innerHTML=`<span class="k">${k}</span>${fmt[k](v).replace(/^[^\d-]+/,"")}`;};
     set("USD",u);set("PYG",p);set("BRL",b);
   });
-  const sU=parseFloat($("#salary").value)||0,sB=sU*r.brl;
+  const sU=salNum(),sB=sU*r.brl;
   const totView=view==="USD"?tU:tB, salView=view==="USD"?sU:sB, diffView=salView-totView, sup=diffView>=0;
   $("#rTot").textContent=fmt[view](totView);
   $("#rSal").textContent=fmt[view](salView);
@@ -280,21 +300,23 @@ $("#clearBtn").onclick=()=>{
   }
 };
 $("#addRow").onclick=()=>{rows.push({name:"Nova despesa",amt:0,cur:"PYG"});renderRows();window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});};
-$("#resetBtn").onclick=()=>{rows=structuredClone(DEFAULTS);$("#usdBrl").value=5.05;$("#usdPyg").value=6060;$("#salary").value=3605;view="BRL";
+$("#resetBtn").onclick=()=>{rows=structuredClone(DEFAULTS);$("#usdBrl").value=5.05;$("#usdPyg").value=6060;$("#salary").value=3605;fmtSal();view="BRL";
   $("#moedaToggle").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.view==="BRL"));
   renderRows();toast("Restaurado");};
-["#usdBrl","#usdPyg","#salary"].forEach(s=>$(s).oninput=calc);
+["#usdBrl","#usdPyg"].forEach(s=>$(s).oninput=calc);
+$("#salary").oninput=e=>{fmtSal();const l=e.target.value.length;try{e.target.setSelectionRange(l,l);}catch(_){}calc();};
 $("#copyBtn").onclick=()=>{
   const r=rate();let L=["CONTAS FIXAS PARAGUAI",""],tB=0,tU=0,tP=0;
   rows.forEach(row=>{const u=toUSD(row.amt,row.cur,r);tU+=u;tB+=u*r.brl;tP+=u*r.pyg;
     L.push(`${row.name}: ${fmt.BRL(u*r.brl)} | ${fmt.PYG(u*r.pyg)}`);});
-  const sU=parseFloat($("#salary").value)||0,dB=sU*r.brl-tB;
+  const sU=salNum(),dB=sU*r.brl-tB;
   L.push("",`TOTAL: ${fmt.BRL(tB)} | ${fmt.USD(tU)}`,`SALÁRIO: ${fmt.BRL(sU*r.brl)} | ${fmt.USD(sU)}`,`DIFERENÇA: ${dB>=0?"+":"−"}${fmt.BRL(Math.abs(dB))}`);
   navigator.clipboard.writeText(L.join("\n")).then(()=>toast("Copiado ✓"),()=>toast("Falha ao copiar"));
 };
 
 /* ---- init ---- */
 load();
+fmtSal();
 $("#moedaToggle").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x.dataset.view===view));
 renderRows();
 fetchRates();
