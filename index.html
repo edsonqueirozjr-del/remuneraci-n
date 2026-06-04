@@ -51,14 +51,14 @@
   .salinfo{margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-dim)}
 
   /* BANNER COTAÇÃO OFICIAL */
-  .fx{grid-column:1/-1;display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
-    border-radius:12px;padding:10px 12px;font-size:.78rem}
-  .fx .dot{width:8px;height:8px;border-radius:50%;background:var(--ink-faint);flex:none}
+  .fx{grid-column:1/-1;display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:10px;padding:7px 10px;font-size:.72rem}
+  .fx .dot{width:7px;height:7px;border-radius:50%;background:var(--ink-faint);flex:none}
   .fx.live .dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
-  .fx .txt{flex:1;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;line-height:1.35}
+  .fx .txt{flex:1;min-width:0;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .fx .txt b{color:var(--ink)}
   .fx .use{flex:none;border:0;background:var(--accent);color:#06251b;font-weight:700;font-family:inherit;
-    font-size:.76rem;padding:8px 13px;border-radius:9px;cursor:pointer}
+    font-size:.72rem;padding:6px 11px;border-radius:8px;cursor:pointer}
   .fx .use:disabled{background:var(--panel);color:var(--ink-faint);cursor:default}
 
   .resumo{background:linear-gradient(180deg,var(--panel),#10161f);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
@@ -187,7 +187,7 @@
   .topbtns .applybtn{flex:1;margin-top:0;font-size:.82rem;padding:11px}
   .applybtn.alt{background:var(--panel-2);color:var(--ink);border:1px solid var(--line)}
   .applybtn.alt:active{border-color:var(--accent);color:var(--accent)}
-  .topcard.info .topmonths,.topcard.info .topfilter,.topcard.info .topbtns,.topcard.info .acts .exc{display:none}
+  .topcard.info .topmonths,.topcard.info .topfilter,.topcard.info #applyBtn{display:none}
   .ti{padding:9px 2px;border-bottom:1px solid var(--line-soft)}
   .ti .top1{display:flex;align-items:center;justify-content:space-between;gap:8px}
   .ti .nmw{min-width:0;flex:1}
@@ -231,9 +231,9 @@
 
   <div class="sec"><span>Salário</span><span class="savehint" id="saveHint">salvo ✓</span></div>
   <div class="params">
-    <div class="pcard full"><label>Salário (em dólar)</label>
+    <div class="pcard full">
       <div class="row"><span class="tag" style="color:var(--usd)">U$</span>
-        <input class="num" id="salary" inputmode="numeric" value="3605"></div>
+        <input class="num" id="salary" inputmode="numeric" placeholder="0" value=""></div>
       <div class="salinfo" id="salInfo"></div>
     </div>
   </div>
@@ -358,7 +358,7 @@ function parseAmt(str,cur){
 }
 const salCur="USD";
 const salNum=()=>parseAmt($("#salary").value,salCur);
-const fmtSal=()=>{$("#salary").value=fmtAmt(salNum(),salCur);};
+const fmtSal=()=>{$("#salary").value=salNum()?fmtAmt(salNum(),salCur):"";};
 
 /* ---- salvar / carregar ---- */
 function save(){
@@ -387,7 +387,7 @@ async function fetchRates(){
       const dt=d.time_last_update_utc?new Date(d.time_last_update_utc):new Date();
       liveRates={brl:+d.rates.BRL.toFixed(2),pyg:Math.round(d.rates.PYG),date:dt.toLocaleDateString("pt-BR")};
       const b=$("#fxBanner");b.classList.add("live");
-      $("#fxTxt").innerHTML=`Oficial ${liveRates.date}: <b>R$ ${liveRates.brl.toLocaleString("pt-BR",{minimumFractionDigits:2})}</b> · <b>₲ ${liveRates.pyg.toLocaleString("es-PY")}</b>`;
+      $("#fxTxt").innerHTML=`${liveRates.date} · <b>R$ ${liveRates.brl.toLocaleString("pt-BR",{minimumFractionDigits:2})}</b> · <b>₲ ${liveRates.pyg.toLocaleString("es-PY")}</b>`;
       $("#fxUse").disabled=false;
     }else throw 0;
   }catch(e){
@@ -464,7 +464,7 @@ function calc(){
   });
   const salUsd=toUSD(salNum(),salCur,r);
   const TOT={USD:tU,PYG:tP,BRL:tB}, SAL={USD:salUsd,PYG:salUsd*r.pyg,BRL:salUsd*r.brl};
-  const si=$("#salInfo");if(si)si.textContent=salUsd?`= ${fmt.BRL(SAL.BRL)} · ${fmt.PYG(SAL.PYG)}`:"";
+  const si=$("#salInfo");if(si)si.textContent=salUsd?`${fmt.BRL(SAL.BRL)} · ${fmt.PYG(SAL.PYG)}`:"";
   $("#rTot").textContent=fmt[sv.tot](TOT[sv.tot]);
   $("#rSal").textContent=fmt[sv.sal](SAL[sv.sal]);
   const d=SAL[sv.diff]-TOT[sv.diff];
@@ -728,6 +728,7 @@ function openTop(pre,info){
   const preset=(pre&&pre.length)?pre.filter(k=>months.includes(k)):months;
   topSel=new Set(preset.length?preset:months);
   $(".topcard").classList.toggle("info",!!info);
+  if(info)topSort="date";
   $("#topTitle").textContent=info?("Detalhes · "+[...topSel].sort().map(monthLabel).join(", ")):"Extrato";
   $("#topMonths").innerHTML=months.map(k=>`<button class="mchip ${topSel.has(k)?"on":""}" data-k="${k}">${monthLabel(k)}</button>`).join("");
   $("#topMonths").querySelectorAll(".mchip").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
