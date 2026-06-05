@@ -32,22 +32,31 @@
   h1{font-family:'Fraunces',serif;font-weight:900;font-size:1.6rem;margin:6px 0 2px;letter-spacing:-.01em}
   h1 .py{color:var(--pyg)}
   .sub{color:var(--ink-dim);font-size:.86rem;margin:0 0 18px}
-  .sec{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:22px 4px 10px;display:flex;justify-content:space-between;align-items:center}
+  .sec{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:18px 4px 8px;display:flex;justify-content:space-between;align-items:center}
   .savehint{font-size:.6rem;color:var(--accent);letter-spacing:.08em;opacity:.0;transition:opacity .4s}
   .savehint.show{opacity:.8}
+  .secbtns{display:flex;gap:6px}
   .clearBtn{border:1px solid var(--line);background:var(--panel-2);color:var(--ink-dim);font-family:inherit;
     font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:9px;cursor:pointer}
   .clearBtn:active{border-color:var(--danger);color:var(--danger)}
+  #filterToggle:active{border-color:var(--accent);color:var(--accent)}
+  .rowfilterwrap{margin:0 0 8px}
+  .rowfilterwrap[hidden]{display:none}
+  .rowfilterwrap input{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:inherit;font-size:.86rem;padding:9px 12px;outline:none}
+  .rowfilterwrap input:focus{border-color:var(--accent)}
 
-  .params{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .params{display:grid;grid-template-columns:1fr 1fr;gap:7px}
   .params .full{grid-column:1/-1}
-  .pcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 11px}
-  .pcard label{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:4px}
+  .pcard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:7px 10px}
+  .pcard label{display:block;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:3px}
   .pcard .row{display:flex;align-items:center;gap:6px}
-  .pcard .tag{font-size:.74rem;font-weight:700}
+  .pcard .tag{font-size:.72rem;font-weight:700}
   .pcard input{width:100%;border:0;background:transparent;color:var(--ink);font-family:'IBM Plex Mono',monospace;
-    font-size:.98rem;font-weight:500;outline:none;font-variant-numeric:tabular-nums;padding:2px 0}
-  .salinfo{margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--ink-dim)}
+    font-size:.92rem;font-weight:500;outline:none;font-variant-numeric:tabular-nums;padding:1px 0}
+  .salinfo{margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-dim)}
+  #salCard.needsal{border-color:var(--usd);box-shadow:0 0 0 1px var(--usd) inset}
+  #salCard.needsal .salinfo{color:var(--usd)}
+
 
   .fxreset{grid-column:1/-1;border:1px solid var(--line);background:var(--panel-2);color:var(--accent);
     font-family:inherit;font-size:.76rem;font-weight:700;padding:9px;border-radius:10px;cursor:pointer}
@@ -140,7 +149,8 @@
   #acctModal.hidden{display:none}
   .acctcard{width:100%;max-width:380px;max-height:88vh;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:18px}
   .accthead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-  .acctmonths{display:flex;flex-wrap:wrap;gap:9px;padding:16px 0}
+  .acctmonths{display:flex;gap:6px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+  .acctmonths::-webkit-scrollbar{display:none}
   .acctmonths .empty2{color:var(--ink-faint);font-size:.85rem}
   .acctadd{border-top:1px solid var(--line);padding-top:14px;margin-bottom:14px}
   .acctadd #acctSearch{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:inherit;font-size:.86rem;padding:11px 12px;outline:none}
@@ -193,11 +203,7 @@
   .emptyx-s{color:var(--ink-dim);font-size:.84rem;margin:0;line-height:1.5}
   .emptyx-s b{color:var(--ink)}
 
-  /* botões importar / top */
-  .impbtns{display:flex;gap:10px;margin-top:10px}
-  .ibtn{flex:1;border:1px solid var(--line);background:var(--panel);color:var(--ink-dim);border-radius:13px;
-    padding:13px 8px;cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600}
-  .ibtn:active{border-color:var(--accent);color:var(--accent)}
+  /* botão adicionar despesa */
 
   /* modal top gastos */
   #topModal{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;
@@ -217,6 +223,20 @@
   .mtab{flex:none;border:1px solid var(--line);background:var(--panel-2);color:var(--ink-dim);font-family:inherit;
     font-size:.78rem;font-weight:600;padding:8px 14px;border-radius:999px;white-space:nowrap;cursor:pointer}
   .mtab.on{background:var(--accent);color:#06251b;border-color:var(--accent)}
+  .topheadbtns{display:flex;gap:6px;flex:none}
+  .gexp{border:1px solid var(--line);background:var(--panel-2);color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:.66rem;font-weight:700;padding:2px 7px;border-radius:7px;cursor:pointer;margin-left:6px}
+  .gexp.open{border-color:var(--accent);color:var(--accent)}
+  .gdates{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+  .gdates[hidden]{display:none}
+  .gdates .gd{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-dim);background:var(--panel-2);border:1px solid var(--line-soft);border-radius:6px;padding:3px 7px}
+  .addopts{display:flex;flex-direction:column;gap:10px;padding-top:16px}
+  .addopt{display:flex;align-items:center;gap:14px;text-align:left;background:var(--panel-2);border:1px solid var(--line);border-radius:13px;padding:14px 16px;cursor:pointer;color:var(--ink)}
+  .addopt:active{border-color:var(--accent)}
+  .addopt .ico{font-size:1.5rem;flex:none}
+  .addopt b{display:block;font-size:.95rem}
+  .addopt small{color:var(--ink-faint);font-size:.76rem}
+  .modsel{opacity:.5;transition:opacity .15s}
+  .modsel.on{opacity:1;outline:2px solid var(--accent);outline-offset:1px}
   .topfilter{display:flex;flex-direction:column;gap:8px;padding:2px 0 8px}
   .topfilter input[type=search]:focus{border-color:var(--accent)}
   .topfilter #fSearch{background:var(--panel-2);border:1px solid var(--line);border-radius:9px;color:var(--ink);font-family:inherit;font-size:.88rem;padding:10px 12px;outline:none}
@@ -258,17 +278,16 @@
   <div class="lockcard">
     <div class="ico">🔒</div>
     <h2>Acesso restrito</h2>
-    <p class="locksub">Desenhe o padrão para desbloquear</p>
+    <p class="locksub">Escolha o que ver e desenhe o padrão</p>
+    <div class="lockbtns">
+      <button class="lockbtn modsel on" id="enterDesp">💸 Despesas</button>
+      <button class="lockbtn modsel alt" id="enterIrp">📑 IRP</button>
+    </div>
     <div class="pattern" id="pattern">
       <svg class="patsvg" id="patSvg" viewBox="0 0 300 300" preserveAspectRatio="none"></svg>
       <div class="pdot" data-n="1"></div><div class="pdot" data-n="2"></div><div class="pdot" data-n="3"></div>
       <div class="pdot" data-n="4"></div><div class="pdot" data-n="5"></div><div class="pdot" data-n="6"></div>
       <div class="pdot" data-n="7"></div><div class="pdot" data-n="8"></div><div class="pdot" data-n="9"></div>
-    </div>
-    <p class="lockpick" id="lockPick">Desenhe o padrão e escolha o que ver</p>
-    <div class="lockbtns">
-      <button class="lockbtn" id="enterDesp">💸 Despesas</button>
-      <button class="lockbtn alt" id="enterIrp">📑 IRP</button>
     </div>
     <div class="lockerr" id="lockErr"></div>
   </div>
@@ -282,9 +301,9 @@
 
   <div class="sec"><span>Salário</span><span class="savehint" id="saveHint">salvo ✓</span></div>
   <div class="params">
-    <div class="pcard full">
+    <div class="pcard full" id="salCard">
       <div class="row"><span class="tag" style="color:var(--usd)">U$</span>
-        <input class="num" id="salary" inputmode="numeric" placeholder="0" value=""></div>
+        <input class="num" id="salary" inputmode="numeric" placeholder="Digite o salário" value=""></div>
       <div class="salinfo" id="salInfo"></div>
     </div>
   </div>
@@ -298,13 +317,11 @@
     <button class="fxreset" id="fxReset" style="display:none">↻ Cotação do dia</button>
   </div>
 
-  <div class="sec"><span>Despesas <span id="rowcount" style="color:var(--ink-faint)"></span></span><button class="clearBtn" id="clearBtn">Limpar</button></div>
+  <div class="sec"><span>Despesas <span id="rowcount" style="color:var(--ink-faint)"></span></span>
+    <span class="secbtns"><button class="clearBtn" id="filterToggle" title="Filtrar despesas">🔎 Filtrar</button><button class="clearBtn" id="clearBtn">Limpar</button></span></div>
+  <div class="rowfilterwrap" id="rowFilterWrap" hidden><input type="search" id="rowFilter" placeholder="Filtrar despesas pelo nome…"></div>
   <div id="rows"></div>
   <button class="add" id="addRow">＋ Adicionar despesa</button>
-  <div class="impbtns">
-    <button class="ibtn" id="importBtn">📥 Importar extrato</button>
-    <button class="ibtn" id="topBtn">📊 Extrato</button>
-  </div>
   <input type="file" id="fileInput" accept=".xls,.xlsx" multiple style="display:none">
 
   <div class="sec">Resumo</div>
@@ -343,11 +360,24 @@
 
 <div id="shareCard"></div>
 
+<div id="addModal" class="hidden">
+  <div class="acctcard">
+    <div class="accthead">
+      <div><div class="topttl">Adicionar despesa</div><div class="topsub">Como você quer adicionar?</div></div>
+      <button class="topclose" id="addClose">✕</button>
+    </div>
+    <div class="addopts">
+      <button class="addopt" id="optManual"><span class="ico">✍️</span><span><b>Adicionar manual</b><small>Digite nome e valor</small></span></button>
+      <button class="addopt" id="optImport"><span class="ico">📥</span><span><b>Importar extrato</b><small>Cartão / banco (Excel)</small></span></button>
+    </div>
+  </div>
+</div>
+
 <div id="topModal" class="hidden">
   <div class="topcard">
     <div class="tophead">
       <div><div class="topttl" id="topTitle">Top gastos</div><div class="topsub" id="topSub"></div></div>
-      <button class="topclose" id="topClose">✕</button>
+      <span class="topheadbtns"><button class="topclose" id="topImport" title="Importar mais">📥</button><button class="topclose" id="topClose">✕</button></span>
     </div>
     <div class="topscroll">
       <div class="mtabs" id="mtabs"></div>
@@ -378,14 +408,17 @@ const $=s=>document.querySelector(s);
 
 /* ---- tela de bloqueio (padrão de deslizar) ---- */
 const PATTERN="1235789";
-let patOk=false;
+let chosenMod="desp"; // módulo escolhido antes do padrão
 function unlock(){$("#lock").classList.add("hidden");try{sessionStorage.setItem("unlocked","1");}catch(_){}}
-function showChooser(){patOk=false;clearPattern();$("#lockErr").textContent="";$("#lockPick").textContent="Desenhe o padrão e escolha o que ver";try{sessionStorage.removeItem("unlocked");}catch(_){}$("#lock").classList.remove("hidden");}
+function showChooser(){clearPattern();$("#lockErr").textContent="";try{sessionStorage.removeItem("unlocked");}catch(_){}$("#lock").classList.remove("hidden");}
+function setMod(m){chosenMod=m;$("#enterDesp").classList.toggle("on",m==="desp");$("#enterIrp").classList.toggle("on",m==="irp");$("#lockErr").textContent="";}
+$("#enterDesp").onclick=()=>setMod("desp");
+$("#enterIrp").onclick=()=>setMod("irp");
 (function initPattern(){
   const grid=$("#pattern"),svg=$("#patSvg");let seq=[],drawing=false;
   function centers(){const r=grid.getBoundingClientRect();const cs=[];for(let i=0;i<9;i++){const cx=(i%3)*100+50,cy=Math.floor(i/3)*100+50;cs.push({n:i+1,cx,cy,px:r.left+(i%3+0.5)*r.width/3,py:r.top+(Math.floor(i/3)+0.5)*r.height/3});}return cs;}
-  function draw(extra){const cs=centers();let p="";seq.forEach((n,i)=>{const c=cs[n-1];p+=(i?"L":"M")+c.cx+" "+c.cy+" ";});
-    let line=`<polyline points="${seq.map(n=>{const c=cs[n-1];return c.cx+","+c.cy;}).join(" ")}" fill="none" stroke="${patOk?'var(--accent)':'var(--usd)'}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+  function draw(extra){const cs=centers();
+    let line=`<polyline points="${seq.map(n=>{const c=cs[n-1];return c.cx+","+c.cy;}).join(" ")}" fill="none" stroke="var(--usd)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
     if(extra&&seq.length){const c=cs[seq[seq.length-1]-1];line+=`<line x1="${c.cx}" y1="${c.cy}" x2="${extra.x}" y2="${extra.y}" stroke="var(--usd)" stroke-width="4" stroke-linecap="round" opacity=".5"/>`;}
     svg.innerHTML=line;
     grid.querySelectorAll(".pdot").forEach(d=>d.classList.toggle("on",seq.includes(+d.dataset.n)));}
@@ -394,19 +427,20 @@ function showChooser(){patOk=false;clearPattern();$("#lockErr").textContent="";$
   function hit(x,y){const cs=centers();for(const c of cs){const dx=x-c.px,dy=y-c.py;if(Math.sqrt(dx*dx+dy*dy)<r()*0.16&&!seq.includes(c.n)){seq.push(c.n);}}}
   function r(){return grid.getBoundingClientRect().width;}
   function toVB(x,y){const rc=grid.getBoundingClientRect();return{x:(x-rc.left)/rc.width*300,y:(y-rc.top)/rc.height*300};}
-  function start(x,y){if(patOk)return;drawing=true;seq=[];hit(x,y);draw();}
+  function start(x,y){drawing=true;seq=[];hit(x,y);draw();}
   function move(x,y){if(!drawing)return;hit(x,y);draw(toVB(x,y));}
   function end(){if(!drawing)return;drawing=false;const code=seq.join("");
-    if(code===PATTERN){patOk=true;draw();grid.querySelectorAll(".pdot.on").forEach(d=>d.classList.add("ok"));$("#lockErr").style.color="var(--accent)";$("#lockErr").textContent="✓ Padrão correto — escolha abaixo";$("#lockPick").textContent="Pronto! O que deseja ver?";}
+    if(code===PATTERN){
+      grid.querySelectorAll(".pdot.on").forEach(d=>d.classList.add("ok"));
+      if(chosenMod==="irp"){$("#lockErr").style.color="var(--ink-dim)";$("#lockErr").textContent="📑 IRP — em construção";setTimeout(clearP,600);}
+      else{setTimeout(unlock,150);}
+    }
     else{grid.querySelectorAll(".pdot.on").forEach(d=>d.classList.add("err"));$("#lockErr").style.color="var(--danger)";$("#lockErr").textContent="Padrão incorreto";setTimeout(clearP,500);}}
   grid.addEventListener("pointerdown",e=>{e.preventDefault();grid.setPointerCapture(e.pointerId);start(e.clientX,e.clientY);});
   grid.addEventListener("pointermove",e=>move(e.clientX,e.clientY));
   grid.addEventListener("pointerup",end);
   grid.addEventListener("pointercancel",end);
 })();
-function requirePat(){if(patOk)return true;$("#lockErr").style.color="var(--danger)";$("#lockErr").textContent="Desenhe o padrão primeiro";return false;}
-$("#enterDesp").onclick=()=>{if(requirePat())unlock();};
-$("#enterIrp").onclick=()=>{if(requirePat()){$("#lockErr").style.color="var(--ink-dim)";$("#lockErr").textContent="📑 IRP — em construção";}};
 try{if(sessionStorage.getItem("unlocked")==="1")$("#lock").classList.add("hidden");}catch(_){}
 
 const rate=()=>({brl:parseFloat($("#usdBrl").value)||0,pyg:parseInt(($("#usdPyg").value||"").replace(/\D/g,""),10)||0});
@@ -483,7 +517,11 @@ function renderRows(){
     $("#rowcount").textContent="";
     calc();return;
   }
+  const fq=norm(($("#rowFilter")&&$("#rowFilter").value)||"");
+  let shown=0;
   rows.forEach((row,i)=>{
+    if(fq&&!norm(row.name).includes(fq))return;
+    shown++;
     const seg=CURS.map(cu=>`<button data-cur="${cu}" data-i="${i}" class="${row.cur===cu?"on":""}">${curLbl(cu)}</button>`).join("");
     const el=document.createElement("div");el.className="xp"+((row.name||"").trim()?"":" needname");
     el.innerHTML=`
@@ -503,6 +541,7 @@ function renderRows(){
       </div>`;
     c.appendChild(el);
   });
+  if(fq&&!shown)c.innerHTML='<div class="emptyx"><p class="emptyx-s">Nenhuma despesa encontrada com esse filtro.</p></div>';
   $("#rowcount").textContent="· "+rows.length;
   bind();calc();
 }
@@ -553,7 +592,8 @@ function calc(){
   });
   const salUsd=toUSD(salNum(),salCur,r);
   const TOT={USD:tU,PYG:tP,BRL:tB}, SAL={USD:salUsd,PYG:salUsd*r.pyg,BRL:salUsd*r.brl};
-  const si=$("#salInfo");if(si)si.textContent=salUsd?`${fmt.BRL(SAL.BRL)} · ${fmt.PYG(SAL.PYG)}`:"Insira o salário para começar a análise";
+  const si=$("#salInfo");if(si)si.textContent=salUsd?`${fmt.BRL(SAL.BRL)} · ${fmt.PYG(SAL.PYG)}`:"⬆ Insira o salário para começar a análise";
+  const sc=$("#salCard");if(sc)sc.classList.toggle("needsal",!salUsd);
   $("#rTot").textContent=fmt[sv.tot](TOT[sv.tot]);
   $("#rSal").textContent=fmt[sv.sal](SAL[sv.sal]);
   const d=SAL[sv.diff]-TOT[sv.diff];
@@ -576,20 +616,29 @@ $("#clearBtn").onclick=()=>{
     rows=[];renderRows();toast("Despesas apagadas");
   }
 };
-$("#addRow").onclick=()=>{
+function addManualRow(){
   const bad=rows.findIndex(r=>!(r.name||"").trim()||!(r.amt>0));
   if(bad>=0){
     toast("Preencha o nome e o valor da despesa atual antes de adicionar outra");
-    const card=$("#rows").children[bad];
+    const card=[...$("#rows").children].find(c=>c.querySelector(`[data-i="${bad}"]`));
     if(card){card.scrollIntoView({behavior:"smooth",block:"center"});
       const inp=card.querySelector(!(rows[bad].name||"").trim()?".name":".amtbox input");
       if(inp)setTimeout(()=>inp.focus(),250);}
     return;
   }
+  if($("#rowFilter"))$("#rowFilter").value="";
   rows.push({name:"",amt:0,cur:"PYG"});renderRows();
   window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"});
   setTimeout(()=>{const last=$("#rows").lastElementChild;const inp=last&&last.querySelector(".name");if(inp)inp.focus();},300);
-};
+}
+$("#addRow").onclick=()=>$("#addModal").classList.remove("hidden");
+$("#addClose").onclick=()=>$("#addModal").classList.add("hidden");
+$("#addModal").onclick=e=>{if(e.target.id==="addModal")$("#addModal").classList.add("hidden");};
+$("#optManual").onclick=()=>{$("#addModal").classList.add("hidden");addManualRow();};
+$("#optImport").onclick=()=>{$("#addModal").classList.add("hidden");
+  if(imp&&imp.txns&&imp.txns.length)openTop();else doImport();};
+$("#filterToggle").onclick=()=>{const w=$("#rowFilterWrap");w.hidden=!w.hidden;if(!w.hidden)$("#rowFilter").focus();else{$("#rowFilter").value="";renderRows();}};
+$("#rowFilter").oninput=renderRows;
 $("#usdBrl").oninput=()=>{updateFxReset();calc();};
 $("#usdPyg").oninput=e=>{const d=(e.target.value||"").replace(/\D/g,"");e.target.value=d?parseInt(d,10).toLocaleString("pt-BR"):"";const l=e.target.value.length;try{e.target.setSelectionRange(l,l);}catch(_){}updateFxReset();calc();};
 $("#salary").oninput=e=>{fmtSal();const l=e.target.value.length;try{e.target.setSelectionRange(l,l);}catch(_){}calc();};
@@ -690,7 +739,7 @@ async function shareImage(fillFn,fname,title){
   }catch(e){toast("Não foi possível gerar");}
 }
 $("#shareBtn").onclick=()=>shareImage(fillShareCard,"contas-paraguai.png","Contas Fixas Paraguai");
-const isUF=t=>{const n=norm(t.desc);return n.includes("unimed")||n.includes("farmacia");};
+const isUF=t=>{const n=norm(t.desc);return n.includes("unimed")||n.includes("farmacia")||n.includes("raia");};
 const keyOf=t=>`${t.date}|${t.ref}|${t.val}|${t.desc}`;
 let acctSel=null,extraKeys=new Set();
 function acctRenderResults(){
@@ -725,8 +774,8 @@ $("#acctBtn").onclick=()=>{
   const monthsUF=[...new Set(imp.txns.filter(isUF).map(t=>{const m=String(t.date).match(/^(\d{2})\/(\d{2})\/(\d{4})$/);return m?m[3]+"-"+m[2]:"";}).filter(Boolean))].sort();
   const months=monthsUF.length?monthsUF:[...new Set(imp.txns.map(t=>{const i=isoDMY(t.date);return i?i.slice(0,7):"";}).filter(Boolean))].sort();
   acctSel=new Set(months);
-  $("#acctMonths").innerHTML=months.map(k=>`<button class="mchip on" data-k="${k}">${monthLabel(k)}</button>`).join("");
-  $("#acctMonths").querySelectorAll(".mchip").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
+  $("#acctMonths").innerHTML=months.map(k=>`<button class="mtab on" data-k="${k}">${monthTab(k)}</button>`).join("");
+  $("#acctMonths").querySelectorAll(".mtab").forEach(b=>b.onclick=()=>{const k=b.dataset.k;
     if(acctSel.has(k)){acctSel.delete(k);b.classList.remove("on");}else{acctSel.add(k);b.classList.add("on");}acctRenderResults();});
   acctRenderResults();
   $("#acctModal").classList.remove("hidden");
@@ -813,10 +862,10 @@ function monthFromName(name){
   return "";
 }
 
-$("#importBtn").onclick=()=>{
+function doImport(){
   if(typeof XLSX==="undefined"){toast("Abra o arquivo no navegador");return;}
   $("#fileInput").click();
-};
+}
 $("#fileInput").onchange=e=>{
   const files=[...e.target.files];if(!files.length)return;
   toast(`Lendo ${files.length} arquivo(s)…`);
@@ -867,7 +916,7 @@ function getFilteredTop(){
 }
 function groupedTop(list){
   const m=new Map();
-  list.forEach(t=>{const k=norm(t.desc)||"—";const g=m.get(k)||{desc:t.desc,val:0,count:0};g.val+=t.val;g.count++;m.set(k,g);});
+  list.forEach(t=>{const k=norm(t.desc)||"—";const g=m.get(k)||{desc:t.desc,val:0,count:0,items:[]};g.val+=t.val;g.count++;g.items.push(t);m.set(k,g);});
   return [...m.values()].sort((a,b)=>b.val-a.val);
 }
 function renderTopList(){
@@ -878,12 +927,15 @@ function renderTopList(){
   $("#applyBtn").textContent=totG?`✓ Aplicar ₲ ${Math.round(totG).toLocaleString("es-PY")} como despesa`:"✓ Aplicar como despesa";
   if(grouped){
     const g=groupedTop(list);
-    $("#topList").innerHTML=g.length?g.map(x=>{
+    $("#topList").innerHTML=g.length?g.map((x,gi)=>{
       const usd=r.pyg?x.val/r.pyg:0,brl=usd*r.brl;
+      const datas=x.items.slice().sort((a,b)=>isoDMY(a.date).localeCompare(isoDMY(b.date)))
+        .map(t=>`<span class="gd">${t.date} · ₲ ${Math.round(t.val).toLocaleString("es-PY")}</span>`).join("");
       return `<div class="ti"><div class="top1">
-          <span class="nmw"><span class="nm">${x.desc}</span> <span class="gct">${x.count}×</span></span>
+          <span class="nmw"><span class="nm">${x.desc}</span> <button class="gexp" data-g="${gi}" title="Ver datas">${x.count}× ▾</button></span>
           <span class="vr"><span class="vl" style="color:var(--pyg)">₲ ${Math.round(x.val).toLocaleString("es-PY")}</span></span></div>
-        <div class="conv2"><span style="color:var(--brl)">R$ ${brl.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}</span> · <span style="color:var(--usd)">U$ ${usd.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</span></div></div>`;
+        <div class="conv2"><span style="color:var(--brl)">R$ ${brl.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}</span> · <span style="color:var(--usd)">U$ ${usd.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</span></div>
+        <div class="gdates" id="gdates-${gi}" hidden>${datas}</div></div>`;
     }).join(""):'<p class="empty">Nada nesse filtro.</p>';
     return;
   }
@@ -914,13 +966,16 @@ function mtabsRefresh(){
     }
     mtabsRefresh();renderTopList();});
 }
+let topInfo=false;
 function openTop(pre,info){
   if(!imp||!imp.txns||!imp.txns.length){toast("Importe um extrato primeiro");return;}
   if($("#fSearch"))$("#fSearch").value="";
+  topInfo=!!info;
   grouped=false;$("#fGroup").classList.remove("on");$("#fGroup").textContent="⊞ Agrupar";$("#fSort").style.display="";
   const months=topMonths();
   topSel=(pre&&months.includes(pre))?new Set([pre]):new Set(months); // padrão: Todos
   $(".topcard").classList.toggle("info",!!info);
+  $("#topImport").style.display=info?"none":"";
   if(info)topSort="date";
   $("#topTitle").textContent=info?("Detalhes · "+(pre?monthLabel(pre):"Extrato")):"Extrato";
   mtabsRefresh();
@@ -928,6 +983,8 @@ function openTop(pre,info){
   $("#topModal").classList.remove("hidden");
 }
 $("#topList").onclick=e=>{
+  const gexp=e.target.closest(".gexp");
+  if(gexp){const p=$("#gdates-"+gexp.dataset.g);if(p){p.hidden=!p.hidden;gexp.classList.toggle("open",!p.hidden);}return;}
   if(grouped)return;
   const cod=e.target.closest(".cod");
   if(cod){document.querySelectorAll(".cod.show").forEach(b=>{if(b!==cod)b.classList.remove("show");});
@@ -943,7 +1000,7 @@ $("#topList").onclick=e=>{
     const k=exc.dataset.key;imp.txns=imp.txns.filter(t=>`${t.date}|${t.ref}|${t.val}|${t.desc}`!==k);
     imp.totalGastos=imp.txns.reduce((s,x)=>s+x.val,0);save();mtabsRefresh();renderTopList();toast("Lançamento removido");}
 };
-$("#topBtn").onclick=()=>openTop();
+$("#topImport").onclick=doImport;
 $("#topClose").onclick=()=>$("#topModal").classList.add("hidden");
 $("#topModal").onclick=e=>{if(e.target.id==="topModal")$("#topModal").classList.add("hidden");};
 $("#fSearch").oninput=renderTopList;
@@ -958,8 +1015,58 @@ $("#fClear").onclick=()=>{
 $("#applyBtn").onclick=applyToCard;
 $("#reportBtn").onclick=()=>{
   if(!imp||!getFilteredTop().length){toast("Nada para o relatório");return;}
-  shareImage(fillReportCard,"relatorio-despesas.png","Relatório de despesas");
+  if(topInfo)shareImage(fillReportCard,"relatorio-despesas.png","Relatório de despesas");
+  else reportPDF();
 };
+function reportPDF(){
+  const r=rate();const list=getFilteredTop();
+  const months=topMonths();const sel=topSel?[...topSel].sort():[];
+  const meses=(!sel.length||sel.length===months.length)?"Todos os meses":sel.map(monthLabel).join(", ");
+  // agrupa por mês, ordena por data
+  const by=new Map();
+  list.forEach(t=>{const mk=isoDMY(t.date).slice(0,7)||"—";if(!by.has(mk))by.set(mk,[]);by.get(mk).push(t);});
+  const mk=[...by.keys()].sort().reverse();
+  let grand=0,body="";
+  mk.forEach(k=>{
+    const arr=by.get(k).slice().sort((a,b)=>isoDMY(a.date).localeCompare(isoDMY(b.date)));
+    const sub=arr.reduce((s,x)=>s+x.val,0);grand+=sub;
+    body+=`<tr class="mh"><td>${k==="—"?"Sem data":monthLabel(k)}</td><td></td><td class="r">₲ ${Math.round(sub).toLocaleString("es-PY")}</td></tr>`;
+    arr.forEach(t=>{const usd=r.pyg?t.val/r.pyg:0;
+      body+=`<tr><td>${t.date}</td><td>${t.desc}${t.ref?` <span class="rf">#${t.ref}</span>`:""}</td><td class="r">₲ ${Math.round(t.val).toLocaleString("es-PY")}<br><small>R$ ${(usd*r.brl).toLocaleString("pt-BR",{minimumFractionDigits:2})}</small></td></tr>`;});
+  });
+  const tUsd=r.pyg?grand/r.pyg:0,tBrl=tUsd*r.brl;
+  const dt=new Date().toLocaleDateString("pt-BR");
+  const html=`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Relatório de despesas</title>
+  <style>
+    *{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#10161f;margin:0;padding:28px}
+    h1{font-size:20px;margin:0}.sub{color:#566;font-size:12px;margin:4px 0 18px}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    th{text-align:left;border-bottom:2px solid #10161f;padding:7px 6px;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+    td{padding:7px 6px;border-bottom:1px solid #e3e8ee;vertical-align:top}
+    td.r{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+    tr.mh td{background:#efe7fa;color:#5b3c86;font-weight:700;border-bottom:1px solid #d9c9f0}
+    small{color:#889}.rf{color:#aab;font-size:10px}
+    tfoot td{border-top:2px solid #10161f;font-weight:700;padding-top:10px}
+    .foot{margin-top:18px;color:#889;font-size:10px}
+    @media print{body{padding:10px}}
+  </style></head><body>
+    <h1>Relatório de despesas</h1>
+    <div class="sub">${meses} · ${list.length} lançamentos</div>
+    <table><thead><tr><th>Data</th><th>Descrição</th><th style="text-align:right">Valor</th></tr></thead>
+      <tbody>${body}</tbody>
+      <tfoot>
+        <tr><td>Total</td><td></td><td class="r">₲ ${Math.round(grand).toLocaleString("es-PY")}</td></tr>
+        <tr><td>Em Real</td><td></td><td class="r">R$ ${tBrl.toLocaleString("pt-BR",{minimumFractionDigits:2})}</td></tr>
+        <tr><td>Em Dólar</td><td></td><td class="r">U$ ${tUsd.toLocaleString("en-US",{minimumFractionDigits:2})}</td></tr>
+      </tfoot></table>
+    <div class="foot">Gerado em ${dt} · Cotação usada: R$ ${r.brl.toLocaleString("pt-BR",{minimumFractionDigits:2})} · ₲ ${Math.round(r.pyg).toLocaleString("es-PY")}</div>
+    <script>window.onload=function(){setTimeout(function(){window.print();},300);}<\/script>
+  </body></html>`;
+  const w=window.open("","_blank");
+  if(!w){toast("Permita pop-ups para gerar o PDF");return;}
+  w.document.open();w.document.write(html);w.document.close();
+  toast("Use 'Salvar como PDF' na impressão");
+}
 
 /* ---- init ---- */
 load();
