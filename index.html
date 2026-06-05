@@ -56,6 +56,13 @@
   .salinfo{margin-top:4px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-dim)}
   #salCard.needsal{border-color:var(--usd);box-shadow:0 0 0 1px var(--usd) inset}
   #salCard.needsal .salinfo{color:var(--usd)}
+  .fxbtn{flex:none;border:0;background:transparent;font-size:1.15rem;line-height:1;padding:2px 3px;cursor:pointer;
+    animation:fxpulse 2.4s ease-in-out infinite;transform-origin:center}
+  .fxbtn:active{transform:scale(.82)}
+  @keyframes fxpulse{0%,100%{transform:scale(1) rotate(-7deg)}50%{transform:scale(1.16) rotate(7deg)}}
+  @media (prefers-reduced-motion: reduce){.fxbtn{animation:none}}
+  #fw{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:200;display:none}
+  #fw.on{display:block}
 
 
   .fxreset{grid-column:1/-1;border:1px solid var(--line);background:var(--panel-2);color:var(--accent);
@@ -68,7 +75,9 @@
   .rrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft)}
   .rrow:last-child{border-bottom:0}
   .rrow .lbl{font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-dim);font-weight:600;flex:none}
-  .rrow .v{flex:1;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .rrow .v{flex:1;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:1.02rem;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .3s}
+  #rDiff.pos{color:var(--accent)}
+  #rDiff.neg{color:var(--danger)}
   .cseg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
   .cseg button{border:0;background:transparent;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.62rem;padding:5px 7px;cursor:pointer;transition:.12s}
   .cseg button.on{color:#06251b;background:var(--accent)}
@@ -302,7 +311,8 @@
   <div class="params">
     <div class="pcard full" id="salCard">
       <div class="row"><span class="tag" style="color:var(--usd)">U$</span>
-        <input class="num" id="salary" inputmode="numeric" placeholder="Digite o salário" value=""></div>
+        <input class="num" id="salary" inputmode="numeric" placeholder="Digite o salário" value="">
+        <button class="fxbtn" id="fxBtn" title="Comemorar!" aria-label="Fogos">🎉</button></div>
       <div class="salinfo" id="salInfo"></div>
     </div>
   </div>
@@ -317,7 +327,7 @@
   </div>
 
   <div class="sec"><span>Despesas <span id="rowcount" style="color:var(--ink-faint)"></span></span>
-    <span class="secbtns"><button class="clearBtn" id="filterToggle" title="Filtrar despesas">🔎 Filtrar</button><button class="clearBtn" id="clearBtn">Limpar</button></span></div>
+    <span class="secbtns"><button class="clearBtn" id="filterToggle" title="Filtrar despesas">🔎 Filtrar</button></span></div>
   <div class="rowfilterwrap" id="rowFilterWrap" hidden><input type="search" id="rowFilter" placeholder="Filtrar despesas pelo nome…"></div>
   <div id="rows"></div>
   <div class="addrow">
@@ -337,6 +347,7 @@
   </div>
 </main>
 
+<canvas id="fw"></canvas>
 <div class="toast" id="toast"></div>
 
 <div id="acctModal" class="hidden">
@@ -510,7 +521,7 @@ function renderRows(){
     const el=document.createElement("div");el.className="xp"+((row.name||"").trim()?"":" needname");
     el.innerHTML=`
       <div class="head">
-        <input class="name" value="${(row.name||"").replace(/"/g,'&quot;')}" data-i="${i}" data-k="name" placeholder="Digite o nome da despesa *">
+        <input class="name" value="${(row.name||"").replace(/"/g,'&quot;')}" data-i="${i}" data-k="name" placeholder="Insira uma despesa">
         ${(norm(row.name).includes("cartao")||norm(row.name).includes("credito"))?`<button class="det" data-det2="${i}" title="Ver detalhes do extrato">ⓘ</button>`:""}
         <button class="del" data-del="${i}">×</button>
       </div>
@@ -581,7 +592,8 @@ function calc(){
   $("#rTot").textContent=fmt[sv.tot](TOT[sv.tot]);
   $("#rSal").textContent=fmt[sv.sal](SAL[sv.sal]);
   const d=SAL[sv.diff]-TOT[sv.diff];
-  $("#rDiff").textContent=(d>=0?"+ ":"− ")+fmt[sv.diff](Math.abs(d));
+  const rd=$("#rDiff");rd.textContent=(d>=0?"+ ":"− ")+fmt[sv.diff](Math.abs(d));
+  rd.classList.toggle("pos",d>0&&!!salUsd);rd.classList.toggle("neg",d<0);
   save();
 }
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1700);}
@@ -594,12 +606,6 @@ $("#fxReset").onclick=()=>{
   if(confirm("Voltar à cotação do dia?")){applyLive();toast("Cotação do dia aplicada");}
 };
 $("#goIrp").onclick=showChooser;
-$("#clearBtn").onclick=()=>{
-  if(!rows.length){toast("Já está vazio");return;}
-  if(confirm("Tem certeza que deseja limpar todas as despesas? O salário e a cotação são mantidos.")){
-    rows=[];renderRows();toast("Despesas apagadas");
-  }
-};
 function addManualRow(){
   const bad=rows.findIndex(r=>!(r.name||"").trim()||!(r.amt>0));
   if(bad>=0){
@@ -712,7 +718,7 @@ async function shareImage(fillFn,fname,title){
   }catch(e){toast("Não foi possível gerar");}
 }
 $("#shareBtn").onclick=()=>shareImage(fillShareCard,"contas-paraguai.png","Contas Fixas Paraguai");
-const isUF=t=>{const n=norm(t.desc);return n.includes("unimed")||n.includes("farmacia")||n.includes("raia");};
+const isUF=t=>{const n=norm(t.desc);return n.includes("unimed")||n.includes("farmacia")||n.includes("raia")||n.includes("nissei");};
 const keyOf=t=>`${t.date}|${t.ref}|${t.val}|${t.desc}`;
 let acctSel=null,extraKeys=new Set();
 function acctRenderResults(){
@@ -1050,6 +1056,29 @@ function reportPDF(){
   w.document.open();w.document.write(html);w.document.close();
   toast("Use 'Salvar como PDF' na impressão");
 }
+
+/* ---- fogos de artifício 🎉 ---- */
+const fwc=$("#fw");let fwP=[],fwRAF=null,fwEnd=0;
+function fwResize(){fwc.width=window.innerWidth;fwc.height=window.innerHeight;}
+function launchFireworks(){
+  fwResize();fwc.classList.add("on");const ctx=fwc.getContext("2d");
+  const cols=["#ffd166","#37d6a0","#5aa9ff","#c792ea","#ff6b6b","#ff9b76"];
+  const burst=(x,y)=>{const n=42;for(let i=0;i<n;i++){const a=Math.PI*2*i/n,sp=2+Math.random()*4.5;
+    fwP.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,col:cols[(Math.random()*cols.length)|0],size:1.5+Math.random()*2.5});}};
+  fwEnd=Date.now()+2400;
+  burst(window.innerWidth*0.5,window.innerHeight*0.34);
+  const timer=setInterval(()=>{if(Date.now()>fwEnd-300){clearInterval(timer);return;}
+    burst(window.innerWidth*(0.15+Math.random()*0.7),window.innerHeight*(0.16+Math.random()*0.34));},250);
+  if(fwRAF)return;
+  const frame=()=>{ctx.clearRect(0,0,fwc.width,fwc.height);
+    fwP.forEach(p=>{p.vy+=0.05;p.x+=p.vx;p.y+=p.vy;p.vx*=0.985;p.vy*=0.985;p.life-=0.011;
+      ctx.globalAlpha=Math.max(p.life,0);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,7);ctx.fill();});
+    fwP=fwP.filter(p=>p.life>0);
+    if(fwP.length||Date.now()<fwEnd){fwRAF=requestAnimationFrame(frame);}
+    else{ctx.clearRect(0,0,fwc.width,fwc.height);ctx.globalAlpha=1;fwRAF=null;fwc.classList.remove("on");}};
+  frame();
+}
+$("#fxBtn").onclick=()=>{launchFireworks();toast("🎉 Boa!");};
 
 /* ---- init ---- */
 load();
