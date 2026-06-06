@@ -65,23 +65,29 @@
   #fw.on{display:block}
 
   /* ---- módulo IRP ---- */
+  /* ---- módulo IRP (tamanhos padronizados) ---- */
+  /* escala: rótulo .66 · nota .74 · nº tabela .82 · nº padrão 1.0 · nº destaque 1.7 */
+  .irpbtns{display:flex;gap:8px}
+  .irpbtns .add{flex:1;margin-top:0}
+  .irpSimBtn{flex:none;border:1px solid var(--line);background:var(--panel);color:var(--ink-dim);border-radius:14px;padding:0 16px;cursor:pointer;font-family:inherit;font-size:.84rem;font-weight:700}
+  .irpSimBtn:active{border-color:var(--accent);color:var(--accent)}
   .irpHero{background:linear-gradient(135deg,#14202b,#0d1117);border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0 4px;position:relative;overflow:hidden}
   .irpHero::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;border-radius:50%;background:rgba(55,214,160,.14);filter:blur(6px)}
-  .irpHeroT{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;position:relative;z-index:1}
-  .irpHeroV{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:2rem;margin:6px 0 2px;color:var(--pyg);position:relative;z-index:1}
-  .irpHeroSub{font-size:.78rem;color:var(--ink-dim);position:relative;z-index:1}
+  .irpHeroT{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;position:relative;z-index:1}
+  .irpHeroV{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.7rem;margin:5px 0 2px;color:var(--pyg);position:relative;z-index:1}
+  .irpHeroSub{font-size:.74rem;color:var(--ink-dim);position:relative;z-index:1}
   .irpTax{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft);position:relative;z-index:1}
-  .irpTax span{font-size:.78rem;color:var(--ink-dim)}
-  .irpTax b{font-family:'IBM Plex Mono',monospace;font-size:1.2rem;color:var(--accent)}
-  .irpCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 14px;margin-bottom:4px}
+  .irpTax span{font-size:.74rem;color:var(--ink-dim)}
+  .irpTax b{font-family:'IBM Plex Mono',monospace;font-size:1.7rem;color:var(--accent);font-weight:700}
+  .irpCard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px 14px;margin-bottom:4px}
   .irpBig{display:flex;gap:12px}
-  .irpBig>div{flex:1;padding:8px 0}
-  .irpBig .k{display:block;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:4px}
-  .irpBig .v{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.05rem}
+  .irpBig>div{flex:1;padding:9px 0}
+  .irpBig .k{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:4px}
+  .irpBig .v{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1rem}
   .irpBig .v.pos{color:var(--accent)}
-  .irow{display:grid;grid-template-columns:1.1fr 1.3fr 1.3fr 1.3fr;gap:6px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:'IBM Plex Mono',monospace;font-size:.78rem}
+  .irow{display:grid;grid-template-columns:1.05fr 1.25fr 1.25fr 1.25fr;gap:6px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line-soft);font-family:'IBM Plex Mono',monospace;font-size:.82rem}
   .irow:last-child{border-bottom:0}
-  .irow.irhead{color:var(--ink-faint);font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;font-family:inherit;font-weight:700}
+  .irow.irhead{color:var(--ink-faint);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-family:inherit;font-weight:700}
   .irow .im{font-family:inherit;color:var(--ink-dim)}
   .irow .ii{color:var(--accent);text-align:right}
   .irow .ie{color:var(--danger);text-align:right}
@@ -89,9 +95,27 @@
   .irow .in.pos{color:var(--accent)} .irow .in.neg{color:var(--danger)}
   .irow.irtot{border-top:1px solid var(--line);border-bottom:0;margin-top:2px;padding-top:11px}
   .irow.irtot .im{color:var(--ink);font-weight:700;font-family:inherit}
-  .irow.irtot .in{color:var(--accent);font-size:.95rem}
-  .irpNote{font-size:.72rem;color:var(--ink-faint);padding:9px 0 4px;line-height:1.5}
+  .irow.irtot .in{color:var(--accent);font-size:1rem}
+  .irpNote{font-size:.74rem;color:var(--ink-faint);padding:9px 0 4px;line-height:1.5}
   .irpNote b{color:var(--ink-dim)}
+
+  /* ---- simulador IRP ---- */
+  .simwrap{padding:16px 2px 2px}
+  .simfield{margin-bottom:14px}
+  .simfield label{display:block;font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:6px}
+  .simin{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+  .simin .tag{font-family:'IBM Plex Mono',monospace;font-weight:700}
+  .simin input{flex:1;border:0;background:transparent;color:var(--ink);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.1rem;outline:none;font-variant-numeric:tabular-nums;min-width:0}
+  .simUse{width:100%;border:1px dashed var(--line);background:transparent;color:var(--ink-dim);border-radius:11px;padding:10px;cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:700;margin-bottom:4px}
+  .simUse:active{border-color:var(--accent);color:var(--accent)}
+  .simResult{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:6px 14px}
+  .simResult .srTop{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+  .simResult .srTop .k{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:700}
+  .simResult .srTop .v{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1rem}
+  .simResult .srTax{display:flex;justify-content:space-between;align-items:center;padding:13px 0 12px;border-top:1px solid var(--line);margin-top:2px}
+  .simResult .srTax .k{font-size:.74rem;color:var(--ink-dim);font-weight:600}
+  .simResult .srTax .v{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:1.7rem;color:var(--accent)}
+  .simResult .srEff{text-align:right;font-size:.72rem;color:var(--ink-faint);padding-bottom:10px}
 
 
   .fxreset{grid-column:1/-1;border:1px solid var(--line);background:var(--panel-2);color:var(--accent);
@@ -182,9 +206,9 @@
   @keyframes flash{0%,100%{box-shadow:0 0 0 0 rgba(55,214,160,0)}25%{box-shadow:0 0 0 2px var(--accent);border-color:var(--accent)}}
 
   /* modal contabilidade (seleção de meses) */
-  #acctModal{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;padding:24px;
+  #acctModal,#simModal{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;padding:24px;
     background:rgba(5,8,12,.75);backdrop-filter:blur(4px)}
-  #acctModal.hidden{display:none}
+  #acctModal.hidden,#simModal.hidden{display:none}
   .acctcard{width:100%;max-width:380px;max-height:88vh;overflow-y:auto;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:18px}
   .accthead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
   .acctmonths{display:flex;gap:6px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
@@ -383,7 +407,10 @@
   </div>
   <p class="sub">Cálculo preliminar do Impuesto a la Renta Personal. Importe o arquivo da SET (Ventas + Compras) que eu somo, separo e calculo as faixas.</p>
 
-  <button class="add" id="irpImport">📥 Importar arquivo da SET</button>
+  <div class="irpbtns">
+    <button class="add" id="irpImport">📥 Importar arquivo da SET</button>
+    <button class="irpSimBtn" id="irpSimOpen">🧮 Simular</button>
+  </div>
   <button class="clearBtn" id="irpShare" style="display:none;width:100%;margin-top:8px;padding:11px">📷 Compartilhar resumo</button>
   <input type="file" id="irpFile" accept=".xls,.xlsx" style="display:none">
 
@@ -410,6 +437,24 @@
 </div>
 
 <div id="shareCard"></div>
+
+<div id="simModal" class="hidden">
+  <div class="acctcard">
+    <div class="accthead">
+      <div><div class="topttl">Simulador IRP</div><div class="topsub">Digite os valores e veja o imposto pelas faixas</div></div>
+      <button class="topclose" id="simClose">✕</button>
+    </div>
+    <div class="simwrap">
+      <div class="simfield"><label>Ingressos no ano (faturas que você emite)</label>
+        <div class="simin"><span class="tag" style="color:var(--accent)">₲</span><input id="simIng" inputmode="numeric" placeholder="0"></div></div>
+      <div class="simfield"><label>Egressos dedutíveis (gastos com Imputa IRP = SI)</label>
+        <div class="simin"><span class="tag" style="color:var(--danger)">₲</span><input id="simEg" inputmode="numeric" placeholder="0"></div></div>
+      <button class="simUse" id="simUseReal" style="display:none">↺ Usar meus valores importados</button>
+
+      <div class="simResult" id="simResult"></div>
+    </div>
+  </div>
+</div>
 
 <div id="topModal" class="hidden">
   <div class="topcard">
@@ -1263,6 +1308,32 @@ function fillIRPCard(){
      </div>`+
     `<div class="sfoot">Gerado em ${new Date().toLocaleDateString("pt-BR")} · Faixas 8/9/10% sobre a renta neta · IRP anual (fecha 31/dez)</div>`;
 }
+
+/* ---- simulador IRP ---- */
+function simMask(el){const d=(el.value||"").replace(/\D/g,"");el.value=d?parseInt(d,10).toLocaleString("es-PY"):"";const l=el.value.length;try{el.setSelectionRange(l,l);}catch(_){}}
+function simVal(id){const d=($("#"+id).value||"").replace(/\D/g,"");return d?parseInt(d,10):0;}
+function renderSim(){
+  const ing=simVal("simIng"),eg=simVal("simEg"),net=ing-eg,tax=irpTax(net),bd=irpBreakdown(net);
+  const eff=ing>0?(tax/ing*100):0;
+  const faixa=net<=0?"—":net<=50000000?"8%":net<=150000000?"9%":"10%";
+  let body=`<div class="srTop"><span class="k">Renta neta</span><span class="v" style="color:${net<0?'var(--danger)':'var(--pyg)'}">${fmtG(net)}</span></div>`;
+  bd.forEach(f=>{body+=`<div class="irow" style="grid-template-columns:1fr 1.4fr 1fr"><span class="im">Faixa ${f.faixa}</span><span class="ii" style="color:var(--ink-dim)">sobre ${fmtG(f.base)}</span><span class="in">${fmtG(f.imp)}</span></div>`;});
+  if(!bd.length)body+=`<div class="irpNote">Sem renta neta tributável (ingressos menores ou iguais aos egressos).</div>`;
+  body+=`<div class="srTax"><span class="k">Imposto estimado · faixa ${faixa}</span><span class="v">${fmtG(tax)}</span></div>`;
+  if(ing>0)body+=`<div class="srEff">Alíquota efetiva: ${eff.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}% dos ingressos</div>`;
+  $("#simResult").innerHTML=body;
+}
+function openSim(prefill){
+  if(prefill&&irpData){$("#simIng").value=Math.round(irpData.ingresos.total).toLocaleString("es-PY");$("#simEg").value=Math.round(irpData.egresos.total).toLocaleString("es-PY");}
+  $("#simUseReal").style.display=irpData?"block":"none";
+  renderSim();$("#simModal").classList.remove("hidden");
+}
+$("#irpSimOpen").onclick=()=>openSim(true);
+$("#simClose").onclick=()=>$("#simModal").classList.add("hidden");
+$("#simModal").onclick=e=>{if(e.target.id==="simModal")$("#simModal").classList.add("hidden");};
+$("#simIng").oninput=e=>{simMask(e.target);renderSim();};
+$("#simEg").oninput=e=>{simMask(e.target);renderSim();};
+$("#simUseReal").onclick=()=>{if(irpData){$("#simIng").value=Math.round(irpData.ingresos.total).toLocaleString("es-PY");$("#simEg").value=Math.round(irpData.egresos.total).toLocaleString("es-PY");renderSim();}};
 
 /* ---- init ---- */
 load();
