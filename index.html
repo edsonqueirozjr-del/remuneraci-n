@@ -62,6 +62,9 @@
     border:1px solid var(--line);background:var(--panel-2);color:var(--ink-dim);border-radius:13px;cursor:pointer;padding:0}
   .themeBtn:active{border-color:var(--accent);color:var(--accent)}
   .hdrGroup{display:flex;align-items:stretch;gap:8px}
+  .navseg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin:0 0 18px}
+  .navseg button{flex:1;border:0;background:transparent;color:var(--ink-faint);font-family:inherit;font-weight:700;font-size:.78rem;padding:11px 6px;cursor:pointer;transition:.12s;display:flex;align-items:center;justify-content:center;gap:5px}
+  .navseg button.on{color:#06251b;background:var(--accent)}
   .lockThemeBtn{position:static;width:auto;height:48px;margin:18px auto 0;padding:0 20px;gap:8px;font-family:inherit;font-size:.86rem;font-weight:600}
 
   .params{display:grid;grid-template-columns:1fr 1fr;gap:7px}
@@ -177,6 +180,8 @@
   .rrow .v{flex:1;text-align:right;font-family:var(--num-font);font-size:1.14rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .3s;letter-spacing:0;line-height:1}
   #rDiff.pos{color:var(--accent)}
   #rDiff.neg{color:var(--danger)}
+  #cDiffV.pos{color:var(--accent)}
+  #cDiffV.neg{color:var(--danger)}
   .cseg{display:flex;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;overflow:hidden;flex:none}
   .cseg button{border:0;background:transparent;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:.7rem;padding:7px 9px;cursor:pointer;transition:.12s}
   .cseg button.on{color:#06251b;background:var(--accent)}
@@ -206,6 +211,8 @@
   .xp .fold{flex:none;width:30px;height:30px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--ink-faint);font-size:.86rem;line-height:1;cursor:pointer;padding:0}
   .xp .fold:active{border-color:var(--accent);color:var(--accent)}
   .xp .det{flex:none;width:30px;height:30px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--ink-faint);font-size:.82rem;line-height:1;cursor:pointer;padding:0}
+  .xp .cardmark{flex:none;width:30px;height:30px;border:1px solid var(--line);border-radius:9px;background:var(--panel-2);color:var(--ink-faint);font-size:.82rem;line-height:1;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
+  .xp .cardmark.on{border-color:var(--accent);background:var(--accent);color:#06251b}
   .xp .det:active{border-color:var(--accent);color:var(--accent)}
   .xp .del{flex:none;width:30px;height:30px;border:0;border-radius:9px;background:var(--panel-2);color:var(--ink-faint);font-size:1.15rem;line-height:1;cursor:pointer}
   .xp .del:active{background:rgba(255,107,107,.18);color:var(--danger)}
@@ -1011,8 +1018,13 @@
     <div class="hdrGroup">
       <button class="themeBtn" id="themeBtn1" title="Mudar tema" aria-label="Mudar tema"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.622 17.897-10.68-2.913"></path><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"></path><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"></path></svg></button>
       <button class="settingsBtn" id="settingsBtn1" title="Configurações" aria-label="Configurações"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.04 4.3l.06.06A1.65 1.65 0 0 0 8.92 4a1.65 1.65 0 0 0 1-1.51V2.4a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.24.6.82 1 1.47 1H21a2 2 0 1 1 0 4h-.09c-.65 0-1.23.4-1.51 1Z"></path></svg></button>
-      <button class="hdrbtn" id="goIrp" title="Ir para IRP"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="15" y2="17"></line></svg>IRP</button>
     </div>
+  </div>
+
+  <div class="navseg">
+    <button data-view="desp" class="on">💸 Despesas</button>
+    <button data-view="card">💳 Cartão</button>
+    <button data-view="irp">📑 IRP</button>
   </div>
 
   <div class="sec"><span>Salário</span></div>
@@ -1075,8 +1087,13 @@
     <div class="hdrGroup">
       <button class="themeBtn" id="themeBtn2" title="Mudar tema" aria-label="Mudar tema"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.622 17.897-10.68-2.913"></path><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"></path><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"></path></svg></button>
       <button class="settingsBtn" id="settingsBtn2" title="Configurações" aria-label="Configurações"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.04 4.3l.06.06A1.65 1.65 0 0 0 8.92 4a1.65 1.65 0 0 0 1-1.51V2.4a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.24.6.82 1 1.47 1H21a2 2 0 1 1 0 4h-.09c-.65 0-1.23.4-1.51 1Z"></path></svg></button>
-      <button class="hdrbtn" id="goDesp" title="Ir para Despesas"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="13" rx="2"></rect><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path><line x1="2" y1="12" x2="22" y2="12"></line></svg>Despesas</button>
     </div>
+  </div>
+
+  <div class="navseg">
+    <button data-view="desp">💸 Despesas</button>
+    <button data-view="card">💳 Cartão</button>
+    <button data-view="irp" class="on">📑 IRP</button>
   </div>
 
   <div class="irpbtns">
@@ -1096,6 +1113,69 @@
 
   <div id="irpBody"></div>
   <button class="irpSimBtn" id="irpSimOpen" style="margin-top:14px" hidden><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="11" x2="8.01" y2="11"></line><line x1="12" y1="11" x2="12.01" y2="11"></line><line x1="16" y1="11" x2="16.01" y2="11"></line><line x1="8" y1="15" x2="8.01" y2="15"></line><line x1="12" y1="15" x2="12.01" y2="15"></line><line x1="16" y1="15" x2="16.01" y2="15"></line></svg>Simulador</button>
+</main>
+
+<main id="cardMain" hidden>
+  <div class="hdr">
+    <h1>Cartão</h1>
+    <div class="hdrGroup">
+      <button class="themeBtn" id="themeBtn3b" title="Mudar tema" aria-label="Mudar tema"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.622 17.897-10.68-2.913"></path><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"></path><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"></path></svg></button>
+      <button class="settingsBtn" id="settingsBtn3b" title="Configurações" aria-label="Configurações"><svg class="btnicon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06A2 2 0 1 1 7.04 4.3l.06.06A1.65 1.65 0 0 0 8.92 4a1.65 1.65 0 0 0 1-1.51V2.4a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9c.24.6.82 1 1.47 1H21a2 2 0 1 1 0 4h-.09c-.65 0-1.23.4-1.51 1Z"></path></svg></button>
+    </div>
+  </div>
+
+  <div class="navseg">
+    <button data-view="desp">💸 Despesas</button>
+    <button data-view="card" class="on">💳 Cartão</button>
+    <button data-view="irp">📑 IRP</button>
+  </div>
+
+  <div class="sec">Despesa vinculada</div>
+  <div class="params">
+    <div class="pcard full" id="cardLinkedCard">
+      <label id="cardLinkedLbl">Nenhuma despesa marcada</label>
+      <div class="row"><span class="tag" id="cardLinkedSym" style="color:var(--ink-faint)">–</span>
+        <input class="num" id="cardLinkedVal" readonly value="" placeholder="Marque uma despesa com 💳 em Despesas"></div>
+    </div>
+  </div>
+
+  <div class="sec">Fatura do cartão</div>
+  <div class="params">
+    <div class="pcard full">
+      <label>Valor total (último fechamento)</label>
+      <div class="entry">
+        <div class="amtbox"><input class="num" id="cardInvoice" inputmode="numeric" value=""></div>
+        <div class="seg" id="cardInvoiceSeg"></div>
+      </div>
+      <div class="chips">
+        <span class="chip usd" id="cardInvChipUsd" hidden></span>
+        <span class="chip pyg" id="cardInvChipPyg" hidden></span>
+        <span class="chip brl" id="cardInvChipBrl" hidden></span>
+      </div>
+    </div>
+    <div class="pcard full">
+      <label>Já descontado pelo banco</label>
+      <div class="entry">
+        <div class="amtbox"><input class="num" id="cardBank" inputmode="numeric" value=""></div>
+        <div class="seg" id="cardBankSeg"></div>
+      </div>
+      <div class="chips">
+        <span class="chip usd" id="cardBankChipUsd" hidden></span>
+        <span class="chip pyg" id="cardBankChipPyg" hidden></span>
+        <span class="chip brl" id="cardBankChipBrl" hidden></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">Resumo</div>
+  <div class="resumo">
+    <div class="rrow"><span class="lbl">Fatura total</span><span class="v" id="cFaturaV"></span>
+      <div class="cseg" data-sv="cFat"><button data-c="BRL">R$</button><button data-c="USD">U$</button><button data-c="PYG">₲</button></div></div>
+    <div class="rrow"><span class="lbl">Já descontado</span><span class="v" id="cDescV"></span>
+      <div class="cseg" data-sv="cDesc"><button data-c="BRL">R$</button><button data-c="USD">U$</button><button data-c="PYG">₲</button></div></div>
+    <div class="rrow"><span class="lbl">Vou pagar (diferença)</span><span class="v" id="cDiffV"></span>
+      <div class="cseg" data-sv="cDiff"><button data-c="BRL">R$</button><button data-c="USD">U$</button><button data-c="PYG">₲</button></div></div>
+  </div>
 </main>
 
 <div class="toast" id="toast"></div>
@@ -1214,7 +1294,8 @@
 <script>
 const KEY="contas-py-v1";
 let rows=[];
-let sv={tot:"BRL",sal:"BRL",diff:"BRL"};
+let sv={tot:"BRL",sal:"BRL",diff:"BRL",cFat:"PYG",cDesc:"PYG",cDiff:"PYG"};
+let card={invAmt:0,invCur:"PYG",bankAmt:0,bankCur:"PYG"}; // fatura do cartão: valor total do fechamento e quanto o banco já descontou
 let imp=null; // fatura importada: {month,total,count,ranked,totalGastos,date}
 let irpData=null; // {ingresos:{byMonth,total},egresos:{byMonth,total},date}
 let irpCur="PYG"; // moeda de exibição do painel IRP: PYG/USD/BRL (dados internos sempre em ₲)
@@ -1303,7 +1384,7 @@ function fmtCur(v,cur){return fmt[cur](pygToCur(v,cur));}
 
 /* ---- salvar / carregar ---- */
 function save(){
-  try{localStorage.setItem(KEY,JSON.stringify({rows,sv,imp,irpData,irpCur,salCur,salary:$("#salary").value,usdBrl:$("#usdBrl").value,usdPyg:$("#usdPyg").value}));
+  try{localStorage.setItem(KEY,JSON.stringify({rows,sv,imp,irpData,irpCur,salCur,card,salary:$("#salary").value,usdBrl:$("#usdBrl").value,usdPyg:$("#usdPyg").value}));
   }catch(e){}
 }
 function load(){
@@ -1314,6 +1395,7 @@ function load(){
     if(s.imp)imp=s.imp;
     if(s.irpData)irpData=s.irpData;
     if(s.irpCur)irpCur=s.irpCur;
+    if(s.card)card=Object.assign(card,s.card);
     if(s.salary!=null)$("#salary").value=s.salary;
     if(s.usdBrl!=null)$("#usdBrl").value=s.usdBrl;
     if(s.usdPyg!=null)$("#usdPyg").value=s.usdPyg;
@@ -1385,6 +1467,7 @@ function renderRows(){
         <div class="nameWrap">
           <input class="name" size="${nameSize}" value="${nameSafe}" data-i="${i}" data-k="name" placeholder="Insira uma despesa">
           ${hasImportedExtratoRow(row)?`<button class="det" data-det2="${i}" title="Ver detalhes do extrato importado" aria-label="Ver detalhes do extrato importado">ⓘ</button>`:""}
+          <button class="cardmark${row.isCard?" on":""}" data-cardmark="${i}" title="${row.isCard?"Despesa vinculada ao Cartão":"Marcar como despesa do Cartão"}" aria-label="Marcar como despesa do Cartão">💳</button>
         </div>
         ${sumVal?`<span class="xpSum ${row.cur.toLowerCase()}"><span class="sym">${curLbl(row.cur)}</span><span class="amount">${sumNum}</span></span>`:""}
         <button class="del" data-del="${i}" title="Excluir despesa" aria-label="Excluir despesa">×</button>
@@ -1447,6 +1530,14 @@ function bind(){
     rows.splice(i,1);renderRows();toast("Despesa excluída");});
   document.querySelectorAll("[data-det2]").forEach(b=>b.onclick=e=>{
     const i=+e.currentTarget.dataset.det2;openTopForRow(rows[i]);});
+  document.querySelectorAll("[data-cardmark]").forEach(b=>b.onclick=e=>{
+    const i=+e.currentTarget.dataset.cardmark;
+    const wasOn=!!rows[i].isCard;
+    rows.forEach(r=>r.isCard=false);
+    rows[i].isCard=!wasOn;
+    renderRows();
+    toast(rows[i].isCard?"Despesa vinculada ao Cartão":"Vínculo com o Cartão removido");
+  });
 }
 function labelToKey(lbl){
   const m=String(lbl).trim().match(/^(.+)\/(\d{4})$/);if(!m)return"";
@@ -1498,13 +1589,84 @@ $("#fxReset").onclick=()=>{
   if(confirm("Voltar à cotação do dia?")){applyLive();toast("Cotação do dia aplicada");}
 };
 function showView(v){
-  const irp=v==="irp";
-  $("#despMain").hidden=irp;$("#irpMain").hidden=!irp;
+  $("#despMain").hidden=v!=="desp";
+  $("#irpMain").hidden=v!=="irp";
+  $("#cardMain").hidden=v!=="card";
+  document.querySelectorAll(".navseg button[data-view]").forEach(b=>b.classList.toggle("on",b.dataset.view===v));
   window.scrollTo(0,0);
-  if(irp){updateIrpCurBtn();renderIRP();}
+  if(v==="irp"){updateIrpCurBtn();renderIRP();}
+  if(v==="card")renderCard();
 }
-$("#goIrp").onclick=()=>showView("irp");
-$("#goDesp").onclick=()=>showView("desp");
+document.querySelectorAll(".navseg button[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+
+/* ---- Cartão ---- */
+function findCardRow(){
+  return rows.find(r=>r.isCard===true) || rows.find(r=>norm(r.name).includes("cartao")) || null;
+}
+function segHtml(field,cur){
+  return CURS.map(cu=>`<button data-ccur="${field}" data-c="${cu}" class="${cur===cu?"on":""}">${curLbl(cu)}</button>`).join("");
+}
+function renderCardLinked(){
+  const row=findCardRow();
+  const lbl=$("#cardLinkedLbl"),sym=$("#cardLinkedSym"),val=$("#cardLinkedVal");
+  if(!lbl||!sym||!val)return;
+  if(row){
+    lbl.textContent="Cartão em Despesas · "+(row.name||"sem nome");
+    sym.textContent=curLbl(row.cur);
+    sym.style.color=`var(--${row.cur.toLowerCase()})`;
+    val.value=row.amt?fmtAmt(row.amt,row.cur):"";
+  }else{
+    lbl.textContent="Nenhuma despesa marcada";
+    sym.textContent="–";
+    sym.style.color="var(--ink-faint)";
+    val.value="";
+  }
+}
+function renderCardSegs(){
+  const is=$("#cardInvoiceSeg"),bs=$("#cardBankSeg");
+  if(is)is.innerHTML=segHtml("inv",card.invCur);
+  if(bs)bs.innerHTML=segHtml("bank",card.bankCur);
+  document.querySelectorAll('[data-ccur="inv"]').forEach(b=>b.onclick=e=>{card.invCur=e.currentTarget.dataset.c;$("#cardInvoice").value=fmtAmt(card.invAmt,card.invCur);renderCardSegs();cardCalc();});
+  document.querySelectorAll('[data-ccur="bank"]').forEach(b=>b.onclick=e=>{card.bankCur=e.currentTarget.dataset.c;$("#cardBank").value=fmtAmt(card.bankAmt,card.bankCur);renderCardSegs();cardCalc();});
+}
+function cardChip(prefix,cur,valUsd,r){
+  const el=$("#card"+prefix+"Chip"+cur[0]+cur.slice(1).toLowerCase());
+  if(!el)return;
+  const own=(prefix==="Inv"?card.invCur:card.bankCur)===cur;
+  el.hidden=own;
+  if(!own){
+    const v=cur==="USD"?valUsd:cur==="PYG"?valUsd*r.pyg:valUsd*r.brl;
+    el.innerHTML=`<span class="k">${curLbl(cur)}</span>${fmt[cur](v).replace(/^[^\d-]+/,"")}`;
+  }
+}
+function cardCalc(){
+  const r=rate();
+  const invUsd=toUSD(card.invAmt,card.invCur,r);
+  const bankUsd=toUSD(card.bankAmt,card.bankCur,r);
+  const diffUsd=invUsd-bankUsd;
+  ["USD","PYG","BRL"].forEach(cu=>{cardChip("Inv",cu,invUsd,r);cardChip("Bank",cu,bankUsd,r);});
+  const INV={USD:invUsd,PYG:invUsd*r.pyg,BRL:invUsd*r.brl};
+  const BANK={USD:bankUsd,PYG:bankUsd*r.pyg,BRL:bankUsd*r.brl};
+  const DIFF={USD:diffUsd,PYG:diffUsd*r.pyg,BRL:diffUsd*r.brl};
+  const fv=$("#cFaturaV"),dv=$("#cDescV"),xv=$("#cDiffV");
+  if(fv)fv.textContent=fmt[sv.cFat](INV[sv.cFat]);
+  if(dv)dv.textContent=fmt[sv.cDesc](BANK[sv.cDesc]);
+  if(xv){xv.textContent=(diffUsd>=0?"":"− ")+fmt[sv.cDiff](Math.abs(DIFF[sv.cDiff]));xv.classList.toggle("pos",diffUsd>0);xv.classList.toggle("neg",diffUsd<0);}
+  save();
+}
+function renderCard(){
+  renderCardLinked();
+  renderCardSegs();
+  const ci=$("#cardInvoice"),cb=$("#cardBank");
+  if(ci)ci.value=card.invAmt?fmtAmt(card.invAmt,card.invCur):"";
+  if(cb)cb.value=card.bankAmt?fmtAmt(card.bankAmt,card.bankCur):"";
+  cardCalc();
+}
+(function bindCardInputs(){
+  const ci=$("#cardInvoice"),cb=$("#cardBank");
+  if(ci)ci.oninput=e=>{card.invAmt=parseAmt(e.target.value,card.invCur);e.target.value=fmtAmt(card.invAmt,card.invCur);const l=e.target.value.length;try{e.target.setSelectionRange(l,l);}catch(_){}cardCalc();};
+  if(cb)cb.oninput=e=>{card.bankAmt=parseAmt(e.target.value,card.bankCur);e.target.value=fmtAmt(card.bankAmt,card.bankCur);const l=e.target.value.length;try{e.target.setSelectionRange(l,l);}catch(_){}cardCalc();};
+})();
 function addManualRow(){
   syncExpensesCollapse();
   const bad=rows.findIndex(r=>!(r.name||"").trim()||!(r.amt>0));
